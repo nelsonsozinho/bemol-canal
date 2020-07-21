@@ -1,0 +1,75 @@
+<h1 mat-dialog-title>Editar</h1>
+
+
+<form class="user-form" #f="ngForm" > 
+
+    <div mat-dialog-content>
+        <p>{{data.nome}}</p>
+        
+        <mat-form-field appearance="fill" class="user-full-width">
+            <mat-label>Perfil</mat-label>
+            <mat-select multiple [(value)]="selected">
+              <mat-option *ngFor="let perfil of perfis" [value]=perfil.id>{{perfil.nome}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="user-full-width" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input id="input_name" 
+                disabled={{data.update}}
+                matInput 
+                name="name" 
+                [(ngModel)]="data.user.nome">
+        </mat-form-field>
+
+        <mat-form-field class="user-full-width" appearance="outline">
+            <mat-label>Username</mat-label>
+            <input id="input_username" 
+                name="username" 
+                disabled={{data.update}} 
+                matInput 
+                [(ngModel)]="data.user.username" 
+                autocomplete="off" 
+                autocomplete="off" >
+        </mat-form-field>
+
+        <mat-form-field class="user-full-width" appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input 
+                id="input-password" 
+                name="password" 
+                matInput 
+                [(ngModel)]="password"  
+                [type]="hide ? 'password' : 'text'" 
+                autocomplete="off" >
+            <button 
+                mat-icon-button 
+                matSuffix 
+                (click)="hide = !hide" 
+                [attr.aria-label]="'Hide password'" 
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field *ngIf=isNeedsToConfirmPassword class="user-full-width" appearance="outline">
+            <mat-label>Confirmar senha</mat-label>
+            <input 
+                id="input-password-confirmation" 
+                name="passwordConfirmation"
+                matInput 
+                [(ngModel)]="passwordConfirmation" 
+                [type]="hide ? 'password' : 'text'"
+                autocomplete="off" >
+            <mat-hint>Errors appear instantly!</mat-hint>
+        </mat-form-field>
+
+    </div>
+    
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Sair</button>
+        <button mat-button (click)="onSaveClick()" cdkFocusInitial>Salvar</button>
+    </div>
+
+</form>
+

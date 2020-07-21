@@ -1,0 +1,45 @@
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+  display: flex;
+
+}
+
+.space-between {
+	justify-content: space-between;
+}
+
+.item {
+	margin: 5px;
+	padding: 0 10px;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.usuario-logado {
+  font-size: 14px;
+}
+
+mat-toolbar {
+	width: 100%;
+}
+
+.perfil {
+  padding-left: 8px;
+  font-weight: bold;
+}
+
+.mat-toolbar.mat-primary {
+	background: #f5f5f5; 
+    color: #000000;
+}
+
+mat-sidenav,
+mat-sidenav.md-locked-open-add-active,
+mat-sidenav.md-closed.md-locked-open-add-active,
+mat-sidenav.md-locked-open {
+	width: 200px;
+	min-width: 200px;
+	max-width: 200px;
+}

@@ -1,0 +1,71 @@
+<mat-sidenav-container *ngIf="isLoggedIn()" class="sidenav-container">
+  <mat-sidenav 
+    class="sidenav" 
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" 
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
+    #drawer>
+    
+    <mat-toolbar>Inventario</mat-toolbar>
+
+    <div class="flex-container" *ngFor="let perfil of perfis">
+
+      <div color="primary" class="perfil">{{perfil.nome}}</div>
+      
+      <mat-nav-list *ngFor="let perfilRotina of perfil.perfilRotinas">
+        <a mat-list-item [routerLink]="perfilRotina.rotina.path">
+          <mat-icon>{{perfilRotina.rotina.icon}}</mat-icon>{{perfilRotina.rotina.nome}}
+        </a>
+      </mat-nav-list>
+
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <section class="container space-between">
+        
+        <button button mat-icon-button color="primary" (click)="drawer.toggle()" >
+          <!-- <span class="navbar-toggler-icon">Toggle</span> -->
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <div class="item">
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+            *ngIf="isHandset$ | async">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        </div>
+
+        <div class="item">
+          <!-- <span>SCI - 7BIT Sistemas</span> -->
+        </div>
+        <div class="item">
+          <span class="logout">
+            <span class="usuario-logado">
+              Usuário: {{currentUser.nome}}
+            </span>
+            <button mat-mini-fab matTooltip="John Doe" [matMenuTriggerFor]="menu" color="accent">
+              <mat-icon>perm_identity</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Logout</span>
+              </button>
+            </mat-menu>
+          </span>
+        </div>
+      </section>
+
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+  <!-- this is the sidenav we are concerned with -->
+  <mat-sidenav #panel class="panel" position="end">
+    <!-- this is where i want to load different components dynamically -->
+    <ng-container #content></ng-container>
+  </mat-sidenav>
+</mat-sidenav-container>

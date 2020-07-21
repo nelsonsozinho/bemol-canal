@@ -1,0 +1,58 @@
+mat-card {
+  background-color: rgba(241, 237, 237, 0.959);
+  width: 500px;
+  height: 300px;
+  max-width: 500px;
+  margin: 2em auto;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+mat-card-subtitle {
+  font-size: 20px;
+  align-content: center;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.login-section {
+  background-image: url("../../../assets/imgs/retail_background.jpg"); 
+  background-size: cover;   
+  height: 100% !important;
+}
+
+
+.flex {
+	display: flex;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  min-height: 100%;
+}
+
+.error {
+        padding: 16px;
+        width: 250px;
+        color: white;
+        background-color: red;
+      }
+
+
+.example-header-image {
+  background-size: cover;
+}
+
+.btn-block {
+  top: 20px;
+}

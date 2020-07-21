@@ -1,0 +1,68 @@
+<section class="login-section container flex center">
+  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center" >
+    <mat-card>
+
+      <mat-card-header>
+        <mat-card-subtitle>SSO Retail</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+          
+          <div class="example-container">
+            
+            <mat-form-field class="full-width-input">
+              <input 
+                [(ngModel)]="user.username" 
+                matInput 
+                placeholder="Login" 
+                required 
+                formControlName="login" />
+            </mat-form-field>
+
+            <mat-form-field class="full-width-input">
+              <input 
+                [(ngModel)]="user.password" 
+                matInput 
+                type="password" 
+                placeholder="Password"
+                formControlName="password" />
+            </mat-form-field>            
+
+          </div>
+
+          <mat-card-actions>
+            <button 
+              mat-stroked-button 
+              (click)="login()" 
+              color="primary"
+              class="btn-block"
+              [disabled]="!loginForm.valid || loading"
+              >
+              
+              <mat-icon *ngIf=!loading>
+                <span>perm_identity</span>
+              </mat-icon>
+    
+              <mat-icon *ngIf=loading>
+                <mat-spinner diameter="20"></mat-spinner>
+              </mat-icon>
+    
+              Logar
+            </button>
+    
+            
+    
+          </mat-card-actions>
+    
+
+        </form>
+
+      </mat-card-content>
+
+      
+    </mat-card>
+
+  </div>
+</section>
