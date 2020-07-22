@@ -29,7 +29,7 @@
    },
    "scripts": {
       "build-ts": "tsc",
-      "start": "ts-node node_modules/typeorm/cli.js migration:generate -n UserInitialPoint && ts-node src/index.ts"
+      "start": "ts-node node_modules/typeorm/cli.js migration:run && ts-node src/index.ts"
    },
    "engines": {
       "node": "13.4"

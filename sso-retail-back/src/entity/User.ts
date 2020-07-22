@@ -28,7 +28,7 @@ export class User {
     profiles: Perfil[]
 
 
-    @Column({ length: 7, nullable: false })
+    @Column({ length: 8, nullable: false })
     cep: String;
 
     @Column({ length: 200, nullable: false })
