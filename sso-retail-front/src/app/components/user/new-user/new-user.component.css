@@ -6,6 +6,16 @@
 
 .user-full-width {
   width: 100%;
+  padding-left: 5px;
+}
+
+.user-half-width {
+  width: 40%;
+  
+}
+
+mat-form-field {
+  padding-left: 5px;
 }
 
 table {

@@ -9,14 +9,20 @@
     
     <mat-toolbar>Inventario</mat-toolbar>
 
-    <div class="flex-container" *ngFor="let perfil of perfis">
-
-      <div color="primary" class="perfil">{{perfil.nome}}</div>
+    <div class="flex-container">
+      <div color="primary" class="perfil">Admin</div>
       
-      <mat-nav-list *ngFor="let perfilRotina of perfil.perfilRotinas">
+      <!-- <mat-nav-list *ngFor="let perfilRotina of perfil.perfilRotinas">
         <a mat-list-item [routerLink]="perfilRotina.rotina.path">
           <mat-icon>{{perfilRotina.rotina.icon}}</mat-icon>{{perfilRotina.rotina.nome}}
         </a>
+      </mat-nav-list> -->
+
+      <mat-nav-list>
+        <a mat-list-item routerLink="/usuario">
+          <mat-icon>person_outline</mat-icon>New User
+        </a>
+        
       </mat-nav-list>
 
     </div>
@@ -27,7 +33,6 @@
       <section class="container space-between">
         
         <button button mat-icon-button color="primary" (click)="drawer.toggle()" >
-          <!-- <span class="navbar-toggler-icon">Toggle</span> -->
           <mat-icon>menu</mat-icon>
         </button>
 
@@ -39,12 +44,17 @@
         </div>
 
         <div class="item">
-          <!-- <span>SCI - 7BIT Sistemas</span> -->
+          <span>Retail SSO</span>
         </div>
+
+        
+        <mat-icon class="notification" matBadge="1" matBadgeColor="warn">mail</mat-icon>
+        
+
         <div class="item">
           <span class="logout">
             <span class="usuario-logado">
-              Usuário: {{currentUser.nome}}
+              Usuário: {{currentUser.name}}
             </span>
             <button mat-mini-fab matTooltip="John Doe" [matMenuTriggerFor]="menu" color="accent">
               <mat-icon>perm_identity</mat-icon>

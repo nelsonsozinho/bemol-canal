@@ -1,16 +1,23 @@
+import { Address } from './address';
 export class User {
 
-  codigo: number;
+  id: number;
 
-  nome: String;
+  name: String;
 
-  username: String;
+  lastname: String;
+
+  email: String;
 
   password: String;
+
+  cpf: String;
 
   active: Boolean;
 
   count: number;
+
+  address: Address;
 
   constructor() { }
 

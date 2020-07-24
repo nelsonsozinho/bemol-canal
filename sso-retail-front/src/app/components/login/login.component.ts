@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = new FormGroup({
-      login: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
   }
@@ -57,24 +57,14 @@ export class LoginComponent implements OnInit {
       } else {
         this.userService.saveUserData(userAuthentication);
         this.currentUser = userAuthentication;
-        this.listarPerfilUsuario();
+        // window.location.reload();
+        this.redirectToHome();
       }
     }, err => {
       this.openSnackBar('Alerta: ' + err.error.error, 'OK');
       console.log('erro de autenticação=' + JSON.stringify(err));
       this.loading = false;
     });
-  }
-
-  listarPerfilUsuario(): void {
-    if(this.currentUser) {
-      this.perfilService.findPerfil().subscribe((list: Perfil[]) => {
-        this.userService.saveProfileList(list);
-        window.location.reload();
-      }, err => {
-        console.log('erro de autenticação=' + JSON.stringify(err));
-      });
-    }
   }
 
   cancelLogin() {

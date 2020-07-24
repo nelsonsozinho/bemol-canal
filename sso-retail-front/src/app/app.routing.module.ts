@@ -1,9 +1,10 @@
-import { UserComponent } from './components/user/user.component';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './components/login/auth.guard';
+import { LoginComponent } from './components/login/login.component';
+import { NewUserComponent } from './components/user/new-user/new-user.component';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
   {
@@ -12,22 +13,29 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent 
+    component: LoginComponent
   },
   {
-      path: 'home',
-      component: HomeComponent, 
-      canActivate: [AuthGuard] 
-  },
-  {
-    path: 'usuario',
-    component: UserComponent,
+    path: 'home',
+    component: HomeComponent,
     canActivate: [AuthGuard]
   },
+
+  {
+    path: 'usuario',    
+    children: [
+      { path: '', redirectTo: 'usuario', pathMatch: 'full' },
+      { path: '', component: UserComponent, data: {title: "Usuario"}, children:[] },
+      { path: 'novo', component: NewUserComponent,  data: { title: 'Novo usuário' }, children:[] },
+      { path: 'update-usuario/:id', component: NewUserComponent, data: { title: 'Editar usuário' } },
+    ]
+  },
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

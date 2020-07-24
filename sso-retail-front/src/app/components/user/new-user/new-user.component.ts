@@ -1,12 +1,13 @@
-import { PerfilService } from './../../../services/perfil.service';
-import { Perfil } from './../../../model/perfil';
-import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user.service';
+import { Address } from './../../../model/address';
 import { User } from './../../../model/user';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CepAddressService } from './../../../services/cep-address.service';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BaseComponent } from '../../../base/base.component';
-import { Component, OnInit, Inject } from '@angular/core';
-import { throwIfEmpty } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Perfil } from './../../../model/perfil';
+import { PerfilService } from './../../../services/perfil.service';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-new-user',
@@ -17,79 +18,104 @@ export class NewUserComponent<T extends BaseComponent> implements OnInit {
 
   public hide: boolean = true;
   public hideConfirmation: boolean = true;
-  public password: string;
   public passwordConfirmation: string;
-  public formValidate: boolean;
-  public perfis: Perfil[];
-  public selected: Perfil[];
+  public formGroup: FormGroup;
+
+  isReadonly = false;
+  submitted = false;
+  loading: Boolean;
+
+  public user: User;
+  public address: Address;
 
   constructor(
-    public dialogRef: MatDialogRef<T>, 
     private toastr: ToastrService,
-    private perfilService: PerfilService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private userService: UserService,
+    private cepService: CepAddressService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    this.data.user = this.data.update ? this.data.user : new User();
-    this.password = "";
-    this.formValidate = true;
+    this.passwordConfirmation = "";
     this.toastr.clear();
-    this.listProfiles();
+    this.user = new User();
+    this.createForm()
+    this.address = new Address();
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+  createForm() {
+    this.formGroup = this.formBuilder.group({
+      name: [null, Validators.required],
+      lastname: [null, Validators.required],
+      cpf: [null, Validators.required],
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      password: [null, Validators.required],
+      passwordConfirmation: [null, Validators.required],
 
-  onSaveClick(): void {
-    if(this.validate()) {
-      console.log(this.selected)
-      this.data.user.password = this.password;
-      this.data.user.perfis = this.selected;
-      this.dialogRef.close(this.data.user);
-    } 
-  }
-
-  listProfiles() {
-    this.perfilService.findPerfil().subscribe((response) => {
-      this.perfis = response;
+      cep: [null, Validators.required],
+      logradouro: [null, Validators.required],
+      complemento: [null],
+      bairro: [null, Validators.required],
+      uf: [null, Validators.required],
+      localidade: [null, Validators.required],
     });
   }
 
-  get isNeedsToConfirmPassword() {
-    return this.password.length > 6  ? true : false; 
+  onNoClick(): void {
+
   }
 
-  private validate() {
-    if(this.data.user.codigo) {
-      if(this.password == this.passwordConfirmation) {
-        return true;
-      } else {
-        this.formValidate = false;
-        this.toastr.error("Senhas não correspondem");
-        return false;
-      }
-    } else {
-        if(this.data.user.nome == null || this.data.user.nome == 0) {
-          this.toastr.error("O nome do usuário é um campo requerido !");
-          return false;
-        } else if(this.data.user.username == null || this.data.user.username.length == 0) {
-          this.toastr.error("O usuername é um campo requerido !");
-          return false;
-        } else if(this.password == null || this.password.length == 0) {
-          this.toastr.error("A senha é um campo requerido !");
-          return false;
-        } else if(this.password !== this.passwordConfirmation) {
-          this.toastr.error("As senhas não correspondem");
-          return false;
-        }
+  save(formDirective: FormGroupDirective): void {
+    this.submitted = true;
+    this.loading = true
+
+    if (this.formGroup.invalid) {
+      return;
     }
 
-    return true;
+    this.user.address = this.address;
+    let service = this.isReadonly ? this.userService.update(this.user) : this.userService.save(this.user);
+
+    service.subscribe( (user: User) => {
+        this.toastr.success("Operação realizada com sucesso");
+        this.onReset(formDirective);
+        this.isReadonly = false;
+        this.loading = false;
+      },
+      (err) => {
+        console.log(err.error.message);
+        this.toastr.error(err.error.message, "Erro ao salvar o usuário");
+        this.isReadonly = false;
+      }
+    );
+
   }
 
-  get isValidform(): boolean {
-    return this.formValidate;
+  checkCep() {
+    const cep = this.address.cep.replace(/\D/g, '');
+    if (cep != "") {
+      const validacep = /^[0-9]{8}$/;
+      if (validacep.test(cep)) {
+        this.fillAddress();
+      } else {
+        console.log("Errro cpf")
+      }
+    }
   }
+
+  fillAddress(): void {
+    this.cepService.getAddressByCep(this.address.cep.trim()).subscribe((response: Address) => {
+      this.address = response;
+    });
+  }
+
+  onReset(formDirective: FormGroupDirective) {
+    this.submitted = false;
+    this.formGroup.reset();
+    formDirective.resetForm();
+  }
+
 }

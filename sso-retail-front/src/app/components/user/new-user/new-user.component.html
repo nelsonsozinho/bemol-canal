@@ -1,75 +1,146 @@
-<h1 mat-dialog-title>Editar</h1>
+<h1 mat-dialog-title>Novo usuário</h1>
 
 
-<form class="user-form" #f="ngForm" > 
+<form class="user-form" [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="save(formDirective)">
 
-    <div mat-dialog-content>
-        <p>{{data.nome}}</p>
-        
-        <mat-form-field appearance="fill" class="user-full-width">
-            <mat-label>Perfil</mat-label>
-            <mat-select multiple [(value)]="selected">
-              <mat-option *ngFor="let perfil of perfis" [value]=perfil.id>{{perfil.nome}}</mat-option>
-            </mat-select>
+    <mat-form-field appearance="outline" class="user-half-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" [(ngModel)]="user.name" formControlName="name">
+        <mat-error *ngIf="
+            !formGroup.controls['name'].valid &&
+            formGroup.controls['name'].touched
+        ">
+            Campo nome é obrigatório
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="user-half-width">
+        <mat-label>Sobrenome</mat-label>
+        <input matInput placeholder="Sobrenome" [(ngModel)]="user.lastname" formControlName="lastname">
+        <mat-error *ngIf="
+        !formGroup.controls['lastname'].valid &&
+        formGroup.controls['lastname'].touched
+    ">
+            Campo nome é obrigatório
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="user-half-width">
+        <mat-label>CPF</mat-label>
+        <input matInput placeholder="CPF" [(ngModel)]="user.cpf" formControlName="cpf" mask="000-000-000-00">
+        <mat-error *ngIf="
+        !formGroup.controls['cpf'].valid &&
+        formGroup.controls['cpf'].touched
+    ">
+            Campo CPF é obrigatório
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="user-half-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" [(ngModel)]="user.email" formControlName="email">
+        <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
+            Email invalido.
+        </mat-error>
+    </mat-form-field>
+
+    <div>
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" [(ngModel)]="user.password" formControlName="password">
+            <mat-error *ngIf="
+                !formGroup.controls['password'].valid &&
+                formGroup.controls['password'].touched
+            ">
+                Campo senha é obrigatório
+            </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="user-full-width" appearance="outline">
-            <mat-label>Nome</mat-label>
-            <input id="input_name" 
-                disabled={{data.update}}
-                matInput 
-                name="name" 
-                [(ngModel)]="data.user.nome">
-        </mat-form-field>
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>Confirm Password</mat-label>
+            <input disabled matInput placeholder="Confirm Password" [(ngModel)]="passwordConfirmation"
+                formControlName="passwordConfirmation">
 
-        <mat-form-field class="user-full-width" appearance="outline">
-            <mat-label>Username</mat-label>
-            <input id="input_username" 
-                name="username" 
-                disabled={{data.update}} 
-                matInput 
-                [(ngModel)]="data.user.username" 
-                autocomplete="off" 
-                autocomplete="off" >
-        </mat-form-field>
+            <mat-error *ngIf="
+                !formGroup.controls['passwordConfirmation'].valid &&
+                formGroup.controls['passwordConfirmation'].touched
+            ">
+                Campo senha é obrigatório
+            </mat-error>
 
-        <mat-form-field class="user-full-width" appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input 
-                id="input-password" 
-                name="password" 
-                matInput 
-                [(ngModel)]="password"  
-                [type]="hide ? 'password' : 'text'" 
-                autocomplete="off" >
-            <button 
-                mat-icon-button 
-                matSuffix 
-                (click)="hide = !hide" 
-                [attr.aria-label]="'Hide password'" 
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
-
-        <mat-form-field *ngIf=isNeedsToConfirmPassword class="user-full-width" appearance="outline">
-            <mat-label>Confirmar senha</mat-label>
-            <input 
-                id="input-password-confirmation" 
-                name="passwordConfirmation"
-                matInput 
-                [(ngModel)]="passwordConfirmation" 
-                [type]="hide ? 'password' : 'text'"
-                autocomplete="off" >
-            <mat-hint>Errors appear instantly!</mat-hint>
         </mat-form-field>
 
     </div>
-    
-    <div mat-dialog-actions>
-        <button mat-button (click)="onNoClick()">Sair</button>
-        <button mat-button (click)="onSaveClick()" cdkFocusInitial>Salvar</button>
+
+    <div>
+        <h3>Edereço</h3>
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>CEP</mat-label>
+            <input matInput placeholder="CEP" (blur)="checkCep()" [(ngModel)]="address.cep" formControlName="cep">
+            <mat-error *ngIf="
+                !formGroup.controls['cep'].valid &&
+                formGroup.controls['cep'].touched
+            ">
+                Campo CEP é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>Logradouro</mat-label>
+            <input matInput placeholder="Rua" [(ngModel)]="address.logradouro" formControlName="logradouro">
+            <mat-error *ngIf="
+            !formGroup.controls['logradouro'].valid &&
+            formGroup.controls['logradouro'].touched
+        ">
+                Campo logradouro é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>Complemento</mat-label>
+            <input matInput placeholder="Complemento" [(ngModel)]="address.complemento" formControlName="complemento">
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>Bairro</mat-label>
+            <input matInput placeholder="Bairro" [(ngModel)]="address.bairro" formControlName="bairro">
+            <mat-error *ngIf="
+            !formGroup.controls['bairro'].valid &&
+            formGroup.controls['bairro'].touched
+        ">
+                Campo bairro é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>UF</mat-label>
+            <input matInput placeholder="Unidade Federal" [(ngModel)]="address.uf" formControlName="uf">
+            <mat-error *ngIf="
+            !formGroup.controls['uf'].valid &&
+            formGroup.controls['uf'].touched
+        ">
+                Campo UF é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="user-half-width">
+            <mat-label>Cidade</mat-label>
+            <input matInput placeholder="Cidade" [(ngModel)]="address.localidade" formControlName="localidade">
+        </mat-form-field>
+        <mat-error *ngIf="
+        !formGroup.controls['localidade'].valid &&
+        formGroup.controls['localidade'].touched
+    ">
+            Campo cidade é obrigatório
+        </mat-error>
+    </div>
+
+    <div>
+        <section>
+            <button color="primary" mat-raised-button type="submit" cdkFocusInitial>Salvar</button>
+        </section>
+
     </div>
 
 </form>
-

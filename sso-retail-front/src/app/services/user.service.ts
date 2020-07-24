@@ -33,14 +33,8 @@ export class UserService {
     return this.http.post(`${environment.API}/user/authentication`,user);
   }
 
-  createOrUpdate(user: User){
-    if(user.codigo != null){
-      return this.http.put(`${environment.API}/user/${user.codigo}`,user);
-
-    } else {
-      user.codigo = null;
-      return this.http.post(`${environment.API}/user`, user);
-    }
+  save(user: User){
+      return this.http.post(`${environment.API}/user`,user);
   }
 
   update(user: User){

@@ -24,6 +24,8 @@ import { GenericSessionService } from './services/generic-session.service';
 import { GenericStorageService } from './services/generic-storage.service';
 import { UserDataService } from './services/user-data.service';
 import { UserService } from './services/user.service';
+import {MatBadgeModule} from '@angular/material/badge'
+
 
 
 
@@ -43,6 +45,7 @@ import { UserService } from './services/user.service';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    MatBadgeModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

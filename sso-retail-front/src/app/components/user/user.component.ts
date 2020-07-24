@@ -38,14 +38,14 @@ export class UserComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = [
     'codigo',
     'nome',
-    'username',
+    'email',
     'acao',
   ];
 
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
-    private eventService: EventService,
+    private eventService: EventService
 
   ) {
     super();
@@ -128,29 +128,11 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   openEditUserDialog(user: User): void {
-    const dialogRef = this.dialog.open(NewUserComponent, {
-      width: '500px',
-      data: { user: user, update: true }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.createOrUpdate(result);
-      }
-    });
+    
   }
 
   openNewUserDialog(): void {
-    const dialogRef = this.dialog.open(NewUserComponent, {
-      width: '500px',
-      data: { update: false }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.createOrUpdate(result);
-      }
-    });
+    this.router.navigate(['usuario/novo']);
   }
 
   remover(user: User) {
@@ -165,20 +147,6 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   clearFilter() { 
     this.filter = new UserFilter();
-  }
-
-  createOrUpdate(user: User) {
-    this.userService.createOrUpdate(user).subscribe((response) => {
-      this.getList();
-      if(user.codigo) {
-        this.toastr.success('Usuário atualiado com sucesso.');
-      } else {
-        this.toastr.success('Usuário cadastrado com sucesso.');
-      }
-    }, err => {
-      this.openSnackBar(err.error.message, 'OK');
-      console.log(err);
-    });
   }
 
   pageChanged($evt) {
