@@ -1,0 +1,17 @@
+1. A solução deve ser disponibilizada em Cloud ou On-premise?
+R: Cloud. A solução foi desenhada para um Cloud. O processo de virtualização do Cloud torna mais fácil a escalabilidade e a manutenibilidade. 
+Mas ele se encaixaria em uma solução On-premise. Claro, isso dependeria muito da quantidade de acesso, localidade e limitação de banda. 
+
+2. Considerando a participação de 4 pessoas técnicas para o desenvolvimento dessa
+solução, responda qual ferramenta acreditas ser apropriada para o controle de
+tarefas da equipe, a ferramenta é ágil?
+R: Kanban eletônico ou “boards” do Gitlab. Sim. 
+
+3. Você se sente capaz de liderar esta equipe? Por quê?
+R: Acredito que conseguiria atuar como tech lead. Não tenho experiência em liderar times, a maioria das vezes atuei como desenvolvedor e algumas vezes como líder técnico.
+
+4. Se pudesse sugerir uma melhoria, mudança ou oportunidade. O que seria?
+R: Relacionada ao processo de seleção, não. É aceitável na minha opinião. 
+
+5. Acha válido esse desafio para o processo que está participando?
+R: Sim. É bom para o contratante e o candidato. Já que extrai pelo menos um pouco das habilidades do candidato para solucionar o problema/desafio proposto.
