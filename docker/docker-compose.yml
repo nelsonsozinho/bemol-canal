@@ -1,0 +1,44 @@
+version: "3.5"
+
+networks: 
+  retail-network:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    container_name: postgres_retail
+    volumes:
+      - ./data/database/data:/var/lib/postgresql/data
+      - ./data/database/bkp:/var/lib/postgresql/bkp
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - retail-network
+
+  
+  sso-retail-back:
+    build: ../sso-retail-back/.
+    ports: 
+      - "3000:3000"
+    command: npm start
+    container_name: sso-retail-back
+    networks:
+      - retail-network
+
+  sso-retail-front:
+    build:
+      context: ../sso-retail-front
+      dockerfile: Dockerfile
+    ports:
+    - "80:80"
+    container_name: sso-retail-front
+    volumes:
+      - ./app-front:/usr/src/app/app-ui
+      - /usr/src/app/app-ui/node_modules

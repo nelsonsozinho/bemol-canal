@@ -1,6 +1,6 @@
+import { Component, Injector, OnInit } from '@angular/core';
 import { DependencyInjector } from './base/dependency-injector';
 
-import { Component, OnInit, ViewChild, ViewContainerRef, Injector } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef, Injector } from '@angul
 })
 export class AppComponent  implements OnInit {
 
-  title = 'Inventário';
+  title = 'Retail';
   isAuthenticated: boolean;
   showTemplate: boolean = false;
 
