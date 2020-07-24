@@ -1,8 +1,9 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Perfil } from './Perfil';
+import { Address } from './Address';
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
 
 
-@Entity({ name: "sso-user" })
+
+@Entity()
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -14,6 +15,12 @@ export class User {
     @Column({ length: 200, nullable: false })
     lastname: String;
 
+    @Column({ length: 11, nullable: false })
+    cpf: String
+
+    @Column({ nullable: false })
+    sexo: number
+
     @Column({ length: 100, nullable: false })
     email: String;
 
@@ -23,36 +30,8 @@ export class User {
     @Column({ nullable: false, default: true })
     active: Boolean;
 
-    @ManyToMany(type => Perfil, { eager: true })
-    @JoinTable()
-    profiles: Perfil[]
-
-
-    @Column({ length: 8, nullable: false })
-    cep: String;
-
-    @Column({ length: 200, nullable: false })
-    logradouro: String;
-
-    @Column({ length: 200, nullable: true })
-    complemento: String;
-
-    @Column({ length: 100, nullable: false })
-    bairro: String;
-
-    @Column({ length: 100, nullable: true })
-    localidade: String;
-
-    @Column({ length: 2, nullable: false })
-    uf: String;
-
-    @Column({ length: 2, nullable: true })
-    unidade: String;
-
-    @Column({ length: 10, nullable: false })
-    ibge: String;
-
-    @Column({ length: 100, nullable: false })
-    gia: String;
-
+    @OneToOne(type => Address)
+    @JoinColumn()
+    address: Address;
+    
 }

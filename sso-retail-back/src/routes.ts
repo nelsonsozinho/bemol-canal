@@ -1,5 +1,5 @@
+import { AddressController } from './controller/AddressController';
 import { UserController } from './controller/UserController';
-import { PerfilController } from "./controller/PerfilController";
 export const Routes = [
 
     //User
@@ -39,17 +39,12 @@ export const Routes = [
         action: "update"
     },
 
-    //profile
+    //addres
     {
         method: "get",
-        route: "/perfil/find-perfil",
-        controller: PerfilController,
-        action: "findPerfil"
-    }, {
-        method: "get",
-        route: "/perfil/find-user-perfis",
-        controller: PerfilController,
-        action: "findPerfilByLoggedUser"
+        route: "/cep/:cep",
+        controller: AddressController,
+        action: "findAddressByCep"
     }
 
 ];
