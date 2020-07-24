@@ -21,3 +21,20 @@ mat-form-field {
 table {
   width: 100%;
 }
+
+mat-card-actions {
+  display: flex;
+  align-content: center;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+mat-select {
+  margin-right: 12px;
+}
+
+button {
+  margin-right: 12px;
+}

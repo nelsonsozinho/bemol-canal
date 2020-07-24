@@ -25,6 +25,7 @@ import { GenericStorageService } from './services/generic-storage.service';
 import { UserDataService } from './services/user-data.service';
 import { UserService } from './services/user.service';
 import {MatBadgeModule} from '@angular/material/badge'
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
@@ -48,6 +49,7 @@ import {MatBadgeModule} from '@angular/material/badge'
     MatBadgeModule,
     AppRoutingModule,
     FormsModule,
+    MatProgressBarModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     MatPaginatorModule,

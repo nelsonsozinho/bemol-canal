@@ -11,6 +11,8 @@ export class User {
 
   password: String;
 
+  sexo: number;
+
   cpf: String;
 
   active: Boolean;

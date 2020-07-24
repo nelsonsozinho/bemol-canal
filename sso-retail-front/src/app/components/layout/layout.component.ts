@@ -1,6 +1,6 @@
+import { BaseComponent } from './../../base/base.component';
 import { User } from './../../model/user';
 import { UserDataService } from './../../services/user-data.service';
-import { Perfil } from './../../model/perfil';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
   Component,
@@ -16,6 +16,7 @@ import { map } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { SidenavService } from '../../services/sidenav.service';
 import { AuthTokenService } from './../../services/auth-token.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { AuthTokenService } from './../../services/auth-token.service';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent extends BaseComponent implements OnInit {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map((result) => result.matches));
 
@@ -35,7 +36,6 @@ export class LayoutComponent implements OnInit {
 
   public positionOptions: TooltipPosition[] = ['left']; // Tooltip postion
   public position = new FormControl(this.positionOptions[0]);
-  public perfis: Perfil[];
   public currentUser: User;
 
   constructor(
@@ -44,18 +44,20 @@ export class LayoutComponent implements OnInit {
     private userService: UserService,
     private userDataService: UserDataService,
     private atuhTokenService: AuthTokenService,
+    private route: ActivatedRoute
   ) {
+    super();
   }
 
   ngOnInit() {
     this.sidenavService.setPanel(this.sidePanel);
     this.sidenavService.setContentVcf(this.vcf);
-    this.perfis = this.userDataService.getUserProfile();    
     this.currentUser = this.userDataService.getLoggedUser();
   }
 
   logout() {
     this.userService.logout();
+    this.router.navigate(['/login']);
     window.location.reload();
   }
 
@@ -63,6 +65,5 @@ export class LayoutComponent implements OnInit {
     this.currentUser = this.userDataService.getLoggedUser();
     return this.currentUser == null ? false : true;
   }
-
 
 }

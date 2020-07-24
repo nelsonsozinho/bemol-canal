@@ -23,11 +23,12 @@ const routes: Routes = [
 
   {
     path: 'usuario',    
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'usuario', pathMatch: 'full' },
       { path: '', component: UserComponent, data: {title: "Usuario"}, children:[] },
       { path: 'novo', component: NewUserComponent,  data: { title: 'Novo usuário' }, children:[] },
-      { path: 'update-usuario/:id', component: NewUserComponent, data: { title: 'Editar usuário' } },
+      { path: 'update/:id', component: NewUserComponent, data: { title: 'Editar usuário' } },
     ]
   },
 

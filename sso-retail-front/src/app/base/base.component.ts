@@ -1,5 +1,4 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EventService } from '../services/event.service';
 import { GenericStorageService } from '../services/generic-storage.service';
 import { Router } from '@angular/router';
 import { DependencyInjector } from './dependency-injector';
@@ -17,8 +16,7 @@ export class BaseComponent {
     @ViewChild('f') form: NgForm;
     protected toastr?: ToastrService;
     protected router?: Router;
-    protected storageService: GenericStorageService;
-    protected eventsService: EventService;
+    protected storageService: GenericStorageService;    
     private _snackBar: MatSnackBar;
     
     constructor() {

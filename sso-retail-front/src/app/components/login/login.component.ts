@@ -5,8 +5,6 @@ import { Autentication } from 'src/app/model/autentication';
 import { UserService } from 'src/app/services/user.service';
 import { CurrentUser } from '../../model/current-user';
 import { Router } from '@angular/router';
-import { PerfilService } from 'src/app/services/perfil.service';
-import { Perfil } from 'src/app/model/perfil';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -23,7 +21,6 @@ export class LoginComponent implements OnInit {
   user = new Autentication();
 
   constructor(private userService: UserService,
-    private perfilService: PerfilService,
     private toastr: ToastrService,
     private _snackBar: MatSnackBar,
     private router: Router) {

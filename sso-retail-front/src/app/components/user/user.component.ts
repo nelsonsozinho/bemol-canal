@@ -5,8 +5,6 @@ import { RemoveComponent } from './../../base/dialog/remove/remove.component';
 import { BaseComponent } from './../../base/base.component';
 import { Paginator } from './../../model/paginator.model';
 import { UserFilter } from './../../filters/user-filter';
-import { CustomEvents } from './../../constants/custom.events';
-import { EventService } from './../../services/event.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from './../../model/user';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -45,8 +43,6 @@ export class UserComponent extends BaseComponent implements OnInit {
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
-    private eventService: EventService
-
   ) {
     super();
   }
@@ -58,10 +54,6 @@ export class UserComponent extends BaseComponent implements OnInit {
 
     this.paginator._intl.itemsPerPageLabel = 'Itens por página.';
     this.getList();
-  }
-
-  ngOnDestroy() {
-    this.eventService.removeListener(CustomEvents.REMOVE_OBJECT_CONFIRM);
   }
 
   getList(filter?) {
@@ -127,8 +119,8 @@ export class UserComponent extends BaseComponent implements OnInit {
     });
   }
 
-  openEditUserDialog(user: User): void {
-    
+  editUser(user: User): void {
+    this.router.navigate(['usuario/update', user.id]);
   }
 
   openNewUserDialog(): void {
@@ -136,7 +128,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   remover(user: User) {
-    this.userService.delete(user.codigo).subscribe((response) => {
+    this.userService.delete(user.id).subscribe((response) => {
       this.getList();
       this.toastr.success('Usuário removido com sucesso.');
     }, err => {
