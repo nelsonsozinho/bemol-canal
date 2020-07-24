@@ -85,10 +85,12 @@ export class UserController {
             newAddress.ibge = request.body.address.ibge;
             newAddress.localidade = request.body.address.localidade;
             newAddress.logradouro = request.body.address.logradouro;
-            newAddress.unidade = request.body.address.unidade;
+            newAddress.unidade = request.body.address.unidade;            
 
             newUser.active = true;
             newUser.name = request.body.name;
+            newUser.sexo = request.body.sexo;
+            newUser.cpf = request.body.cpf;
             newUser.lastname = request.body.lastname;
             newUser.email = request.body.email;
             newUser.password = request.body.password;
@@ -108,11 +110,13 @@ export class UserController {
         const password = await hashSync(request.body.password, 10);
         
         const user = await this.repository.createQueryBuilder("user")
-        .where("user.codigo = :id", {id: id})
+        .where("user.id = :id", {id: id})
         .getOne();
 
-        user.password = password;
-        return this.repository.save(user);
+        
+
+
+        return this.repository.save(request.body);
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
