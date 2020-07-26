@@ -10,5 +10,5 @@ RUN npm run build
 
 #Run application 
 FROM nginx:1.15
-COPY ./dist/retail /usr/share/nginx/html
+COPY ./dist/sso-retail-front /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
